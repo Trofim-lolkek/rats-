@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<style type="text/css">
+		.prop {
+			position: absolute;
+			height: 100px;
+			width: 100px;
+			background-size: 100% 100%;
+			background-image: url(куча.jpg);
+		}
+		.mole {
+			position: absolute;
+			height: 100px;
+			width: 50px;
+			transition: 1s;
+			background-size: 100% 100%;
+		}
+		.end {
+			position: relative;
+			height: 1000px;
+			width: 1000px;
+			background: red;
+			display: none
+		}
+	</style>
+</head>
+<body>
+
+<!-- дивы норы чтобы появится -->
+<h1>Осталось времени <span class="Timer">10</span></h1>
+<h1>ОЧКИ <span class="sum">0</span></h1>
+<div class="bg-warning prop first" style="top: 100px; left: 500px"></div> 
+<div class="bg-warning prop" style="top: 100px; left: 700px"></div>
+<div class="bg-warning prop" style="top: 100px; left: 900px"></div>
+<div class="end"  style="top: -100px; left: 500px"> 
+	<h1 style="position: absolute; left: 250px; top: 250px;">ОЧКИ <span class="sum2">0</span></h1>
+</div>
+
+
+
+<script type="text/javascript">
+	let sum = 0
+	let firstNora = document.querySelector('.first')
+	let holesX = ['500px', '700px', '900px'];
+	let name = ['good', 'bad']
+	let t = 10
+
+	let CreateMole = function() {
+		let mole = document.createElement('div');
+		document.body.appendChild(mole);
+		firstNora.before(mole)   
+		mole.classList.add('mole');
+		mole.style.top = '100px';
+		let index = Math.round(Math.random()*2);
+		mole.style.left = holesX[index];
+		let index2 = Math.round(Math.random()*1);
+		mole.name = name[index2]
+
+			if (mole.name == 'good') {
+				mole.style.backgroundImage = "url(rat.jpg)";
+			}
+			if (mole.name == 'bad') {
+				mole.style.backgroundImage = "url(tnt.jpg)";
+			}
+
+		let showMole = function() {
+		mole.style.top = '50px';
+		}
+		setTimeout(showMole,1000)
+
+		let hideMole = function() {
+		mole.style.top = '100px';
+		}
+		setTimeout(hideMole,2000)
+
+		 mole.onclick = function() {	
+		 		if(mole.name=='good') {
+		 		sum = sum + 1;
+		 		mole.style.display = 'none';
+				document.querySelector(".sum").innerHTML = sum;
+			}else if (mole.name=='bad'){
+				sum = sum - 1;
+				mole.style.display = 'none';
+				document.querySelector(".sum").innerHTML = sum;
+			}}
+	}
+	
+	setInterval(CreateMole, 1000)
+
+	 let endGame = function(){
+            clearInterval(interval1)
+                let end = document.createElement('div');
+                document.querySelector(".end").style.display = "block"
+                document.querySelector(".sum2").innerHTML = sum
+}   
+ setTimeout(endGame,11000)
+ let Timer = function() {
+  t = t - 1
+  document.querySelector(".Timer").innerHTML = t
+ }
+ interval2 = setInterval (CreateMole, 1000)
+interval1= setInterval(Timer, 1000)
+setTimeout(CreateMole, 9000)
+
+</script>
+</body>
+</html>
